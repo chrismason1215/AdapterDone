@@ -3,6 +3,9 @@ package _todoInSection;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.event.TableModelListener;
+import javax.swing.table.TableModel;
+
 import model.Student;
 
 /**
@@ -16,7 +19,7 @@ import model.Student;
 // (after adding implements TableModel to the class heading).
 //
 // Note: Some TableModel methods need not be implemented.
-public class StudentCollection  {
+public class StudentCollection  implements TableModel{
 
   private List<Student> theStudents;
 
@@ -61,5 +64,70 @@ public class StudentCollection  {
     }
     return null; // not found
   }
+
+@Override
+public int getRowCount() {
+	return theStudents.size();
+}
+
+@Override
+public int getColumnCount() {
+	return 4;
+}
+
+@Override
+public String getColumnName(int columnIndex) {
+	if(columnIndex == 0)
+		return "Name";
+	else if(columnIndex == 1)
+		return "Major";
+	else if(columnIndex == 2)
+		return "GPA";
+	else
+		return "Age";
+}
+
+@Override
+public Class<?> getColumnClass(int columnIndex) {
+	// TODO Auto-generated method stub
+	return theStudents.getClass();
+}
+
+@Override
+public boolean isCellEditable(int rowIndex, int columnIndex) {
+	// TODO Auto-generated method stub
+	return false;
+}
+
+@Override
+public Object getValueAt(int rowIndex, int columnIndex) {
+	Student stu = theStudents.get(rowIndex);
+	if(columnIndex == 0)
+		return stu.getName();
+	else if(columnIndex == 1)
+		return stu.getMajor();
+	else if(columnIndex == 2)
+		return stu.getGPA();
+	else
+		return stu.getAge();
+}
+
+@Override
+public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
+	// TODO Auto-generated method stub
+	return;
+}
+
+@Override
+public void addTableModelListener(TableModelListener l) {
+	// TODO Auto-generated method stub
+	return;
+}
+
+@Override
+public void removeTableModelListener(TableModelListener l) {
+	// TODO Auto-generated method stub
+	return;
+}
 
 }

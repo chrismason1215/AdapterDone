@@ -8,8 +8,11 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.RowSorter;
 import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
 
 @SuppressWarnings("serial")
 public class StudentGUI extends JFrame {
@@ -41,6 +44,11 @@ public class StudentGUI extends JFrame {
     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     setSize(700, 140);
     setLocation(30, 30);
+    
+    model = new StudentCollection();
+    table = new JTable(model);
+    this.add(new JScrollPane(table), BorderLayout.CENTER);
+    
 
     // TODO: 2) Need a new StudentCollection as our model
  
@@ -59,7 +67,9 @@ public class StudentGUI extends JFrame {
     // while setting its model to model
  
     // TODO: 7) Link up table and the sorter
- 
+    
+    RowSorter<StudentCollection> sorter = new TableRowSorter<StudentCollection>((StudentCollection) model);
+    table.setRowSorter(sorter);
     // Layout the GUI
     JButton button = new JButton("Select Highlighted Row");
     JPanel panel = new JPanel();
@@ -78,8 +88,13 @@ public class StudentGUI extends JFrame {
       // TODO: 8) Show the name of the student on the currently selected
       // row need table's getSelectedRow and convertRowIndexToModel as
       // well as model's getValueAt(rowIndex, columnIndex). See the API
-      // for details.
-      System.out.println("Get student's name from the table");
+      // for details. 
+      
+      int row = table.getSelectedRow();
+      row = table.convertRowIndexToModel(row);
+      String name = (String)model.getValueAt(row, 0);
+      
+      System.out.println(name);
 
     }
   }
